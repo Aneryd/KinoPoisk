@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <p>Название фильма</p>
+            <input type="text" name="title_film"><br>
+            <p>Статус фильма</p>
+{#            <input type="text" name="status_film"><br>#}
+            <select name="status_film">
+            {% for item in all_status %}
+                    <option value="{{ item }}" selected>{{ item }}</option>
+            {% endfor %}
+            </select><br>
+            <input type="submit" name="add_film_button_page" formaction="{% url 'main' %}" value="Отправить">
+        </form>
+    </div>
+
+
+
+{% endblock %}

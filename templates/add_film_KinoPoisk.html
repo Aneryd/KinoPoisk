@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <p>Название фильма</p>
+            <input type="text" name="KP_title_film"><br>
+            <select name="status_film_KP">
+            {% for item in all_status %}
+                <option value="{{ item }}" selected>{{ item }}</option>
+            {% endfor %}
+            </select><br>
+            <input type="submit" name="KP_add_film" formaction="{% url 'add_film_KP' %}" value="Отправить">
+        </form>
+    </div>
+
+{% endblock %}

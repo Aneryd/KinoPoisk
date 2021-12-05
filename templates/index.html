@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type='submit' value="Фильмы" onclick="{% url 'main' %}" style="color: red; width: 950px;" name="film_button_list"/>
+        <input type="submit" value="Сериалы" onclick="{% url 'main' %}" style="color: blue; width: 950px;" name="serial_button_list"/>
+    </form>
+
+    <div style="overflow: hidden;">
+        <div style="float: left; width: 600px; margin-left: 10px;">
+
+            <p>Избранное</p>
+
+            {% if film_list %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button name="add_film_button">
+                        <a href="{% url 'add_film' %}">Добавить</a>
+                    </button>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <button name="KP_add_button">
+                        <a href="{% url 'find_parser' %}">Парсить</a>
+                    </button>
+                </form>
+                <ol>
+                    {% for item in film_list %}
+                        {% if item.film_status.id == 1 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-top: 10px; position: sticky">
+                                <li><a href="{% url 'film_view' %}?film_id={{ item.id }}">{{ item.film_title }}</a></li>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if serial_list %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button name="add_serial_button">
+                        <a href="{% url 'add_serial' %}">Добавить</a>
+                    </button>
+                </form>
+                <ol>
+                    {% for item in serial_list %}
+                        {% if item.serial_status.id == 1 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-bottom: 10px; position: sticky">
+                                <li>
+                                    <a href="{% url 'serial_view' %}?serial_id={{ item.id }}">{{ item.serial_title }}</a>
+                                </li>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+        </div>
+
+        <div style="float: left; width: 600px;">
+
+            <p>На будущее</p>
+
+            {% if film_list %}
+                <ol>
+                    {% for item in film_list %}
+                        {% if item.film_status.id == 3 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-top: 10px; position: sticky">
+                                <li><a href="{% url 'film_view' %}?film_id={{ item.id }}">{{ item.film_title }}</a></li>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if serial_list %}
+                <ol>
+                    {% for item in serial_list %}
+                        {% if item.serial_status.id == 3 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-bottom: 10px; position: sticky">
+                                <li>
+                                    <a href="{% url 'serial_view' %}?serial_id={{ item.id }}">{{ item.serial_title }}</a>
+                                </li>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+        </div>
+
+        <div style="float: left; width: 600px;">
+
+            <p>Просмотренно</p>
+
+            {% if film_list %}
+                <ol>
+                    {% for item in film_list %}
+                        {% if item.film_status.id == 2 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-top: 10px; position: sticky">
+                               <li><a href="{% url 'film_view' %}?film_id={{ item.id }}">{{ item.film_title }}</a></li>
+                                <input type="submit" value="+" style="position: absolute; right: 0; top: 15px;" name="">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if serial_list %}
+                <ol>
+                    {% for item in serial_list %}
+                        {% if item.serial_status.id == 2 %}
+                            <div style="width: 400px; height: 55px; outline: 2px solid #000; border-radius: 10px; margin-bottom: 10px; position: sticky">
+                                <li>
+                                    <a href="{% url 'serial_view' %}?serial_id={{ item.id }}">{{ item.serial_title }}</a>
+                                </li>
+                                <input type="submit" value="+" style="position: absolute; right: 0; top: 15px;" name="">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+        </div>
+    </div>
+
+    {#<script>#}
+    {#    function getValue(){#}
+    {#        var sel = document.getElementById("select1");#}
+    {#        var value = sel.options[sel.selectedIndex].text;#}
+    {#        console.log(value);#}
+    {#    }#}
+    {#</script>#}
+
+{% endblock %}

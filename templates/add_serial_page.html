@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <p>Название сериала</p>
+            <input type="text" name="title_serial"><br>
+            <p>Статус сериала</p>
+            <select name="status_serial">
+            {% for item in all_status %}
+                    <option value="{{ item }}" selected>{{ item }}</option>
+            {% endfor %}
+            </select><br>
+            <p>Просмотренные серии</p>
+            <input type="text" name="series_watching"><br>
+            <p>Макс. кол-во серий</p>
+            <input type="text" name="max_series"><br>
+            <input type="submit" name="add_serial_button_page" formaction="{% url 'main' %}" value="Отправить">
+        </form>
+    </div>
+
+
+
+{% endblock %}

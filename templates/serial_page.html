@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+{#        <img src="{{ img_serial }}">#}
+        <p>{{ serial_name }}</p>
+        <p>{{ serial_cat }}</p>
+        <p>{{ serial_genre }}</p>
+        <p>{{ serial_desc }}</p>
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <select name="select_form_status" id="select">
+                    {% for item in all_status %}
+                        {% if item == status %}
+                            <option value="{{ status }}" selected>{{ status }}</option>
+                        {% else %}
+                            <option value="{{ item.status_name }}">{{ item.status_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+            </select>
+            <input type="submit" name="select_button" value="Применить" formaction="{% url 'main' %}"/>
+{#            Нижний input передает id сериала, но на странице не отображается#}
+            <input value="{{ serial_id }}" name="id_serial_form" style="visibility: hidden">
+        </form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="delete_serial_page" value="Удалить" formaction="{% url 'main' %}"/>
+            {#            Нижний input передает id сериала, но на странице не отображается#}
+            <input value="{{ serial_id }}" name="id_serial_form" style="visibility: hidden">
+        </form>
+    </div>
+{#    <script>#}
+{#    function getValue(){#}
+{#        var sel = document.getElementById("select1");#}
+{#        var value = sel.options[sel.selectedIndex].text;#}
+{#        console.log(value);#}
+{#    }#}
+{#    </script>#}
+{% endblock %}

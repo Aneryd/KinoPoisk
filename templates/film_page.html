@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+{#        <img src="{{ img_film }}">#}
+        <p>{{ film_name }}</p>
+        <p>{{ film_cat }}</p>
+        <p>{{ film_genre }}</p>
+        <p>{{ film_desc }}</p>
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <select name="select_form_status" id="select">
+                {% for item in all_status %}
+                    {% if item == status %}
+                        <option value="{{ status }}" selected>{{ status }}</option>
+                    {% else %}
+                        <option value="{{ item.status_name }}">{{ item.status_name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input type="submit" name="select_button" value="Применить" formaction="{% url 'main' %}"/>
+            {#            Нижний input передает id фильма, но на странице не отображается#}
+            <input value="{{ film_id }}" name="id_film_form" style="visibility: hidden">
+        </form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="delete_film_page" value="Удалить" formaction="{% url 'main' %}"/>
+            {#            Нижний input передает id фильма, но на странице не отображается#}
+            <input value="{{ film_id }}" name="id_film_form" style="visibility: hidden">
+        </form>
+    </div>
+
+{% endblock %}
